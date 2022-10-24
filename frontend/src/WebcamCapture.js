@@ -19,8 +19,8 @@ function WebcamCapture() {
   const videoConstraints = {
     width: 640,
     height: 480,
-    // facingMode: { exact: "environment" }
-    facingMode: "user"
+    facingMode: { exact: "environment" }
+    // facingMode: "user"
   }
 
   const startCam = () => {
@@ -38,7 +38,6 @@ function WebcamCapture() {
   }
 
   const handleOnUserMedia = () => {
-    console.log("Hereeeee")
     console.log(videoElement.current.stream)
   }
 
