@@ -13,14 +13,12 @@ function Web() {
     console.log(isShowVideo)
     if(isShowVideo) {
         const interval = setInterval(() => {
-            console.log("videoElement" + videoElement.current.getScreenshot())
-            // capture1();
+            // console.log("videoElement" + videoElement.current.getScreenshot())
             setImageSrc(videoElement.current.getScreenshot())
             getRoadSign(videoElement.current.getScreenshot())
           }, 2000);
           return () => clearInterval(interval);
     }
-     // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
   }, [isShowVideo])
 
 const getRoadSign = (image) => {
@@ -72,9 +70,7 @@ const getRoadSign = (image) => {
       </div>
       <button onClick={startCam}>Start Video</button>
       <button onClick={stopCam}>Stop Video</button>
-      {/* <button onClick={capture1}>Capture photo</button> */}
       <div width="100px">
-        {/* {imageSrc} */}
         <p style={{ fontSize: '20pt' }}>{output}</p>
       </div>
     </div>
