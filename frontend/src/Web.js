@@ -6,6 +6,8 @@ function Web() {
   const [isShowVideo, setIsShowVideo] = useState(false);
   const videoElement = useRef();
   const [imageSrc, setImageSrc] = useState("");
+  const [output, setOutput] = useState("");
+  const [receivedResponse, setReceivedResponse] = useState("");
 
   useEffect(() => {
     console.log(isShowVideo)
@@ -14,23 +16,34 @@ function Web() {
             console.log("videoElement" + videoElement.current.getScreenshot())
             // capture1();
             setImageSrc(videoElement.current.getScreenshot())
-          }, 5000);
+            getRoadSign(videoElement.current.getScreenshot())
+          }, 2000);
           return () => clearInterval(interval);
     }
      // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
   }, [isShowVideo])
 
-//   const capture1 = () => {
-//     console.log("here")
-//     setImageSrc(videoElement.current.getScreenshot());
-//     console.log(imageSrc)
-//   }
+const getRoadSign = (image) => {
+    fetch('https://4287-34-138-88-244.ngrok.io', { 
+      method: 'POST',
+      headers: {
+      },
+      body: JSON.stringify({ "input": image })
+    }).then(response =>  response.json())
+    .then(resData => { 
+        setOutput(resData.prediction)
+        setReceivedResponse(true)
+    }
+    ).catch(
+      error => console.log(error)
+    );
+  };
 
   const videoConstraints = {
     width: 640,
     height: 480,
-    // facingMode: { exact: "environment" }
-    facingMode: "user"
+    facingMode: { exact: "environment" }
+    // facingMode: "user"
   }
 
   const startCam = () => {
@@ -45,6 +58,7 @@ function Web() {
       track.stop()
     });
     setIsShowVideo(false);
+    setOutput("")
   }
 
   
@@ -60,7 +74,8 @@ function Web() {
       <button onClick={stopCam}>Stop Video</button>
       {/* <button onClick={capture1}>Capture photo</button> */}
       <div width="100px">
-        {imageSrc}
+        {/* {imageSrc} */}
+        <p style={{ fontSize: '20pt' }}>{output}</p>
       </div>
     </div>
   );
