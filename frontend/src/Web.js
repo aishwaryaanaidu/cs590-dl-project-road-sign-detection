@@ -71,7 +71,7 @@ const getRoadSign = (image) => {
       </div>
       <button style={{ marginTop: '5%'}} class="button-64" onClick={startCam}>Start Video</button>
       <button class="button-64" onClick={stopCam}>Stop Video</button>
-        <p style={{ fontSize: '20pt', color: "#3CB4ED", marginTop: '7px' }}>output</p>
+        <p style={{ fontSize: '20pt', color: "#3CB4ED", marginTop: '7px' }}>{output}</p>
     </div>
   );
 };
