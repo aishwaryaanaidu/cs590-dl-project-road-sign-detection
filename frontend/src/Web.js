@@ -63,16 +63,15 @@ const getRoadSign = (image) => {
 
   return (
     <div>
+      <h1 style={{ color: "#3CB4ED" }}>Road sign detection</h1>
       <div className="camView">
         {isShowVideo &&
-          <Webcam audio={false} id="vid" screenshotFormat="image/jpeg" ref={videoElement} videoConstraints={videoConstraints} />
+          <Webcam style = {{ maxHeight: '60vh'}} audio={false} id="vid" screenshotFormat="image/jpeg" ref={videoElement} videoConstraints={videoConstraints} />
         }
       </div>
-      <button onClick={startCam}>Start Video</button>
-      <button onClick={stopCam}>Stop Video</button>
-      <div width="100px">
-        <p style={{ fontSize: '20pt' }}>{output}</p>
-      </div>
+      <button style={{ marginTop: '5%'}} class="button-64" onClick={startCam}>Start Video</button>
+      <button class="button-64" onClick={stopCam}>Stop Video</button>
+        <p style={{ fontSize: '20pt', color: "#3CB4ED", marginTop: '7px' }}>output</p>
     </div>
   );
 };
