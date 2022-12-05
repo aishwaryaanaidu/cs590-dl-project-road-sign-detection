@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import Webcam from 'react-webcam';
+import Speech from 'react-speech';
 
 function Web() {
 
@@ -8,6 +9,13 @@ function Web() {
   const [imageSrc, setImageSrc] = useState("");
   const [output, setOutput] = useState("");
   const [receivedResponse, setReceivedResponse] = useState("");
+  const [ourText, setOurText] = useState("")
+  const msg = new SpeechSynthesisUtterance("Hello world")
+
+  const speechHandler = (msg) => {
+    msg.text = output
+    window.speechSynthesis.speak(msg)
+  }
 
   useEffect(() => {
     console.log(isShowVideo)
@@ -16,13 +24,14 @@ function Web() {
             // console.log("videoElement" + videoElement.current.getScreenshot())
             setImageSrc(videoElement.current.getScreenshot())
             getRoadSign(videoElement.current.getScreenshot())
+            speechHandler(msg)
           }, 2000);
           return () => clearInterval(interval);
     }
   }, [isShowVideo])
 
 const getRoadSign = (image) => {
-    fetch('https://4287-34-138-88-244.ngrok.io', { 
+    fetch('https://21e2-34-125-191-238.ngrok.io', { 
       method: 'POST',
       headers: {
       },
@@ -40,8 +49,8 @@ const getRoadSign = (image) => {
   const videoConstraints = {
     width: 640,
     height: 480,
-    facingMode: { exact: "environment" }
-    // facingMode: "user"
+    // facingMode: { exact: "environment" }
+    facingMode: "user"
   }
 
   const startCam = () => {
@@ -69,6 +78,8 @@ const getRoadSign = (image) => {
           <Webcam style = {{ maxHeight: '60vh'}} audio={false} id="vid" screenshotFormat="image/jpeg" ref={videoElement} videoConstraints={videoConstraints} />
         }
       </div>
+      {/* <Speech text="Welcome to react speech" /> */}
+      {/* <button onClick={() => speechHandler(msg)}>SPEAK</button> */}
       <button style={{ marginTop: '5%'}} class="button-64" onClick={startCam}>Start Video</button>
       <button class="button-64" onClick={stopCam}>Stop Video</button>
         <p style={{ fontSize: '20pt', color: "#3CB4ED", marginTop: '7px' }}>{output}</p>
