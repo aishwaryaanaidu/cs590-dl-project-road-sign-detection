@@ -10,10 +10,12 @@ function Web() {
   const [output, setOutput] = useState("");
   const [receivedResponse, setReceivedResponse] = useState("");
   const [ourText, setOurText] = useState("")
-  const msg = new SpeechSynthesisUtterance("Hello world")
 
-  const speechHandler = (msg) => {
-    msg.text = output
+  const msg = new SpeechSynthesisUtterance()
+
+  const speechHandler = (msg, out) => {
+    msg.text = out
+
     window.speechSynthesis.speak(msg)
   }
 
@@ -24,21 +26,23 @@ function Web() {
             // console.log("videoElement" + videoElement.current.getScreenshot())
             setImageSrc(videoElement.current.getScreenshot())
             getRoadSign(videoElement.current.getScreenshot())
-            speechHandler(msg)
+            // speechHandler(msg, output)
           }, 2000);
           return () => clearInterval(interval);
     }
   }, [isShowVideo])
 
 const getRoadSign = (image) => {
-    fetch('https://21e2-34-125-191-238.ngrok.io', { 
+
+    fetch('http://127.0.0.1:5000/', { 
       method: 'POST',
       headers: {
       },
-      body: JSON.stringify({ "input": image })
+      body: JSON.stringify({ "base64": image.split(",")[1] })
     }).then(response =>  response.json())
     .then(resData => { 
         setOutput(resData.prediction)
+        speechHandler(msg, resData.prediction)
         setReceivedResponse(true)
     }
     ).catch(
@@ -66,6 +70,7 @@ const getRoadSign = (image) => {
     });
     setIsShowVideo(false);
     setOutput("")
+    speechHandler(msg, "")
   }
 
   
@@ -78,8 +83,6 @@ const getRoadSign = (image) => {
           <Webcam style = {{ maxHeight: '60vh'}} audio={false} id="vid" screenshotFormat="image/jpeg" ref={videoElement} videoConstraints={videoConstraints} />
         }
       </div>
-      {/* <Speech text="Welcome to react speech" /> */}
-      {/* <button onClick={() => speechHandler(msg)}>SPEAK</button> */}
       <button style={{ marginTop: '5%'}} class="button-64" onClick={startCam}>Start Video</button>
       <button class="button-64" onClick={stopCam}>Stop Video</button>
         <p style={{ fontSize: '20pt', color: "#3CB4ED", marginTop: '7px' }}>{output}</p>
