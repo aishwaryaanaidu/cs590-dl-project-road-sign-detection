@@ -10,10 +10,12 @@ function Web() {
   const [output, setOutput] = useState("");
   const [receivedResponse, setReceivedResponse] = useState("");
   const [ourText, setOurText] = useState("")
+
   const msg = new SpeechSynthesisUtterance()
 
   const speechHandler = (msg, out) => {
     msg.text = out
+
     window.speechSynthesis.speak(msg)
   }
 
@@ -31,6 +33,7 @@ function Web() {
   }, [isShowVideo])
 
 const getRoadSign = (image) => {
+
     fetch('http://127.0.0.1:5000/', { 
       method: 'POST',
       headers: {
