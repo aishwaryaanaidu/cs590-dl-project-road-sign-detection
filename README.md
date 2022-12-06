@@ -4,3 +4,14 @@ This repository contains code associated with the Deep Learning project Road Sig
 
 Dataset - https://www.kaggle.com/datasets/meowmeowmeowmeowmeow/gtsrb-german-traffic-sign
 
+
+
+Object detection
+
+MMdetection - https://github.com/open-mmlab/mmdetection
+
+Classifier 
+CNN custom trained
+
+Stack - React, Node and Python
+
